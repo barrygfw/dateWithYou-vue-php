@@ -1,0 +1,31 @@
+{
+  "name": "jeem-back",
+  "version": "1.0.0",
+  "description": "api",
+  "main": "server.js",
+  "scripts": {
+    "jeem-front-install": "npm install --prefix jeem-front",
+    "jeem-front": "npm start --prefix jeem-front",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "all": "concurrently \"npm run server\" \"npm run jeem-front\" "
+  },
+  "author": "lap",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
+    "crypto-js": "^3.1.9-1",
+    "eslint": "^5.7.0",
+    "express": "^4.16.4",
+    "gravatar": "^1.6.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.3.4",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LAPFUTURE/allStackBack.git"
+  }
+}

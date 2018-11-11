@@ -8,7 +8,7 @@ const key = require("../../config/keys");
 const passport= require("passport"); 
 
 router.get("/test",(req,res)=>{
-    res.json({path:"/test","message":"success"});
+    res.json({path:"/test","message":"success,lap"});
 });
 
 router.get("/",(req,res)=>{

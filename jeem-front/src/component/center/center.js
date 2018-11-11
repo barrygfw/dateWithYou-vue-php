@@ -4,6 +4,7 @@ import { HashRouter, Route, Switch } from 'jeem/router';
 
 import One from '../one/one';
 import Two from '../two/two';
+import Details from '../details/details'
 
 import styles from './center.less';
 

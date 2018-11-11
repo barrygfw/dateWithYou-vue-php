@@ -8,7 +8,7 @@ export default class Two extends React.Component {
               marginTop: '200px', border: '1px solid black', height: '200px', marginLeft: '150px',
             }}
               >
-                Two
+                this is Two
                 <a href="#/home">This is two,Go Home</a>
                 <button onClick={() => this.props.history.push('home')}>通过函数Go Home</button>
             </div>

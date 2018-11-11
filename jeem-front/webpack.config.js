@@ -61,6 +61,10 @@ module.exports = ({ mode } = { mode: 'development', presets: [] }) => webpackMer
             },
           }],
         },
+        {
+          test: /.(jpg|png)$/,
+          use: ['url-loader'],
+        },
       ],
     },
     plugins: [

@@ -15,6 +15,7 @@ import One from '../../component/one/one';
 import Two from '../../component/two/two';
 import Details from '../../component/details/details'
 import Nav from '../../component/nav/nav'
+import User from '../../component/user/user'
 
 import styles from './index.less';
 
@@ -30,18 +31,17 @@ const Home = () => (
 			<Nav/>
 			<div className={ styles.lay }>
 				<Layout className={ styles.layout }>
-					<Header style={{ background: '#fff', padding: 0 }} >header</Header>
-					<Content style={{ margin: '24px 16px 0' }}>
+					<Header className={ styles.header } >header</Header>
+					<Content style={{ margin: '24px 16px 0' }} className={ styles.divcontent }>
 						<div className={ styles.content }>
 							<Switch>
 								<Route path='/home'><div>home</div></Route>
 								<Route path='/eating'><div>eating</div></Route>
+								<Route path='/user' component={User}></Route>
 							</Switch>
-							<Route exact path='/fundus/other' component={Details} />
-							<Route path='/fundus/other/one' component={One}/>
-							<Route path='/fundus/other/two' component={Two}/>
-							<Route path='/infos' component={Details}/>
-							<Route path='/nav' component={Nav}/>
+							<Route exact path='/fundus/money' component={Details} />
+							<Route path='/fundus/one' component={One}/>
+							<Route path='/fundus/two' component={Two}/>
 						</div>
 					</Content>
 					<Footer className={ styles.footer }>

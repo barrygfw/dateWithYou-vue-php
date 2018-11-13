@@ -28,8 +28,7 @@ export default class headnav extends React.Component {
         </div>
         <div className = { styles.head_nav }>
           <div className = { styles.logo }></div>
-          {/* <div className={ styles.title }> LAP ManageSystem </div> */}
-          <h1 style={{ display: 'inline-block', margin: '0 auto' }} >LAP ManageSystem</h1>
+          <span className = { styles.title }><b>LAP ManageSystem</b></span>
           <div className = { styles.logout }>
             <Dropdown overlay={menu}>
               <Link className={ styles.a } to="/infos">

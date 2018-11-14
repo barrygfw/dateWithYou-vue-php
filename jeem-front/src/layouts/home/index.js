@@ -16,6 +16,8 @@ import Two from '../../component/two/two';
 import Details from '../../component/details/details'
 import Nav from '../../component/nav/nav'
 import User from '../../component/user/user'
+import Eating from '../../component/eating/eating'
+import Money from '../../component/money/money'
 
 import styles from './index.less';
 
@@ -31,17 +33,24 @@ const Home = () => (
 			<Nav/>
 			<div className={ styles.lay }>
 				<Layout className={ styles.layout }>
-					<Header className={ styles.header } >header</Header>
+					<Header className={ styles.header }>
+						<Switch>
+							<Route path='/home'><span>Home</span></Route>
+							<Route path='/eating'><span>Eating</span></Route>
+							<Route path='/fundus'><span>Fundus</span></Route>
+							<Route path='/user'><span>User</span></Route>
+						</Switch>
+					</Header>
 					<Content style={{ margin: '24px 16px 0' }} className={ styles.divcontent }>
 						<div className={ styles.content }>
 							<Switch>
 								<Route path='/home'><div>home</div></Route>
-								<Route path='/eating'><div>eating</div></Route>
+								<Route path='/eating' component={ Eating }></Route>
 								<Route path='/user' component={User}></Route>
+								<Route exact path='/fundus/money' component={Money} />
+								<Route path='/fundus/one' component={One}/>
+								<Route path='/fundus/two' component={Two}/>
 							</Switch>
-							<Route exact path='/fundus/money' component={Details} />
-							<Route path='/fundus/one' component={One}/>
-							<Route path='/fundus/two' component={Two}/>
 						</div>
 					</Content>
 					<Footer className={ styles.footer }>

@@ -26,6 +26,16 @@ export default new Router({
 			path: '/DateWithYou',
 			name: 'DateWithYou',
 			component: () => import('./views/DateWithYou.vue'),
+			children: [
+				{
+					path: '/DateWithYou/home',
+					component: () => import('./views/About.vue'),
+				},
+				{
+					path: '/DateWithYou/home',
+					component: () => import('./views/About.vue'),
+				},
+			],
 		},
 	],
 });

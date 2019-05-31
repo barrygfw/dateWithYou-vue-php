@@ -1,34 +1,29 @@
 {
-  "name": "jeem-back",
-  "version": "1.0.0",
-  "description": "api",
-  "main": "server.js",
+  "name": "file-upload-vue-php",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "jeem-front-install": "npm install --prefix jeem-front",
-    "jeem-front": "npm start --prefix jeem-front",
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "all": "concurrently \"npm run server\" \"npm run jeem-front\" "
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
-  "author": "lap",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "concurrently": "^4.0.1",
-    "crypto-js": "^3.1.9-1",
-    "eslint": "^5.7.0",
-    "express": "^4.16.4",
-    "gravatar": "^1.6.0",
-    "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.3.4",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LAPFUTURE/allStackBack.git"
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "ant-design-vue": "^1.3.9",
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.1.0"
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
   }
 }

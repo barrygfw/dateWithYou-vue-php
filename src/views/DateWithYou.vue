@@ -1,7 +1,9 @@
 <template>
-	<div class="about">
-		<h1>DateWithYou</h1>
-	</div>
+	<a-row>
+		<a-col>
+			<h1>DateWithYous</h1>
+		</a-col>
+	</a-row>
 </template>
 <script>
 	export default {

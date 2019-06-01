@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import store from './store/store';
 import axios from './http';
 
 import 'ant-design-vue/dist/antd.css';
@@ -136,7 +136,8 @@ Vue.use(Upload);
 // Vue.use(ConfigProvider);
 
 Vue.prototype.$axios = axios;
-
+const qs = require('query-string');
+Vue.prototype.$QS = qs;
 Vue.config.productionTip = false;
 
 new Vue({

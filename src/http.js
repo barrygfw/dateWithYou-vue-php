@@ -4,13 +4,13 @@ import { message } from 'ant-design-vue';
 
 if (process.env.NODE_ENV === 'production') {
 	// 生产环境,线上环境
-	axios.defaults.baseURL = 'http://survey.xukai.ink';
+	axios.defaults.baseURL = 'http://dwyapi.connectyoume.top/';
 } else if (process.env.NODE_ENV === 'test') {
 	// 测试环境
 	axios.defaults.baseURL = '';
 } else if (process.env.NODE_ENV === 'development') {
 	// 开发环境
-	axios.defaults.baseURL = 'http://survey.xukai.ink';
+	axios.defaults.baseURL = 'http://dwyapi.connectyoume.top/';
 }
 
 // let hide = function() {};

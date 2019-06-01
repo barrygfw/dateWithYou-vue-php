@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <a-row>
-            <a-col :xs="{ span:24 }" :sm="{ span: 24 }" :md="{ span:16, offset:4 }" :lg="{ span:14, offset:5 }" :xl="{ span: 12, offset: 6 }" :xxl="{ span: 10, offset: 7 }">
+            <a-col :xs="{ span:24 }" :sm="{ span: 24 }" :md="{ span:16, offset:4 }" :lg="{ span:12, offset:6 }" :xl="{ span: 12, offset: 6 }" :xxl="{ span: 12, offset: 6 }">
                 <a-menu
                     v-model="current"
                     mode="horizontal"
@@ -23,7 +23,9 @@
                         <a-icon type="setting" /> Setting
                     </a-menu-item>
                     <a-menu-item key="login">
-                        <a-icon type="login" /> Login
+                        <router-link to="/DateWithYou/login">
+                            <a-icon type="login"/> Login
+                        </router-link>
                     </a-menu-item>
                     <a-menu-item key="theme">
                         <a-switch
@@ -48,16 +50,16 @@ export default {
         };
     },
     methods: {
-        changeTheme (checked) {
+        changeTheme(checked) {
             this.theme = checked ? 'light' : 'dark';
         },
     },
 };
 </script>
 <style scoped>
-.header{
-    background: #fff;
-    border-bottom: 1px solid #f1f1f1;
-    color: #909090;
-}
+    .header{
+        background: #fff;
+        border-bottom: 1px solid #f1f1f1;
+        color: #909090;
+    }
 </style>

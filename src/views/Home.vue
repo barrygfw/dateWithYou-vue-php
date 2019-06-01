@@ -6,7 +6,7 @@
 					Hello,
 				</h1>
 				<p style="font-weight:600; font-size:1.6em">
-					My name is LAP.
+					My name is LAPFUTURE.
 				</p>
 				<p>
 					I am an Web developer. I am interested in Web Programming
@@ -79,7 +79,7 @@
 		name: 'home',
 		methods: {
 			dateWithYou() {
-				this.$router.push({ path: '/dateWithYou' });
+				this.$router.push({ path: '/dateWithYou/home' });
 			},
 		},
 		mounted() {

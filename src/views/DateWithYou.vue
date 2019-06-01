@@ -3,7 +3,7 @@
 		<a-col :span="24">
 			<Navi></Navi>
 		</a-col>
-		<a-col :lg="{ span: 12, offset:6,}" class="date-with-you">
+		<a-col :xs="{ span:24 }" :sm="{ span: 24 }" :md="{ span:16, offset:4 }" :lg="{ span:12, offset:6 }" :xl="{ span: 12, offset: 6 }" :xxl="{ span: 12, offset: 6 }">
             <router-view />
 		</a-col>
 	</a-row>
@@ -17,8 +17,3 @@
 		},
 	};
 </script>
-<style scoped>
-	.date-with-you {
-		background-color: rgb(244, 245, 245);
-	}
-</style>

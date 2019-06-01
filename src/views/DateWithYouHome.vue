@@ -36,58 +36,7 @@
 		},
 		data() {
 			return {
-				source: [
-					{
-						pid: 1,
-						author: 'yeyan1996',
-						time: '2天前',
-						title:
-							'一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧',
-						type: 'JavaScript前端',
-						star: 1354,
-						diss: 81,
-					},
-					{
-						pid: 2,
-						author: 'yeyan1996',
-						time: '2天前',
-						title:
-							'一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧',
-						type: 'JavaScript前端',
-						star: 1354,
-						diss: 85,
-					},
-					{
-						pid: 3,
-						author: 'yeyan1996',
-						time: '2天前',
-						title:
-							'一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧',
-						type: 'JavaScript前端',
-						star: 1354,
-						diss: 85,
-					},
-					{
-						pid: 4,
-						author: 'yeyan1996',
-						time: '2天前',
-						title:
-							'一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧',
-						type: 'JavaScript前端',
-						star: 1354,
-						diss: 85,
-					},
-					{
-						pid: 5,
-						author: 'yeyan1996',
-						time: '2天前',
-						title:
-							'一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧一个合格的中级前端工程师必须要掌握的 28 个 JavaScript 技巧',
-						type: 'JavaScript前端',
-						star: 1354,
-						diss: 85,
-					},
-				],
+				source: [],
 				topStar: [
 					{
                         pid: 123,
@@ -112,14 +61,29 @@
 					},
 				],
 			};
-		},
+        },
+        methods: {
+            getArticleAll() {
+                this.$axios.post('article/get_all')
+                .then(res => {
+                    if (res.data.status === '1') {
+                        this.source = res.data.data;
+                        console.log(this.source);
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
+            },
+        },
+        created() {
+            this.getArticleAll();
+        },
 	};
 </script>
 <style scoped>
-	.title {
-		font-weight: bolder;
-		font-size: 1.2em;
-	}
 	.article {
         border-bottom: 1px solid #e8e8e8;
         cursor: pointer;

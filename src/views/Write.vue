@@ -1,13 +1,141 @@
 <template>
 	<div>
-		<h1>This is an Write page</h1>
+        <br />
+        <a-input addonBefore="Title" v-model="title" placeholder="Please input the acticle title"/>
+        <br /><br />
+        <div>
+            <quillEditor v-model="content"
+                ref="myQuillEditor"
+                :options="editorOption">
+            </quillEditor>
+        </div>
+        <br /> <br /><br /><br /><br />
+        <a-row>
+            <a-col :span="10" :offset="1">
+                <a-dropdown placement="bottomLeft">
+                    <a-input-group compact>
+                        <a-button type="primary">Select Type</a-button>
+                        <a-auto-complete
+                            v-bind:value="selectType"
+                            style="width: 150px"
+                            placeholder="Please Select Type"
+                            disabled
+                        />
+                    </a-input-group>
+                    <a-menu slot="overlay">
+                        <a-menu-item v-for="item in types" v-bind:key="item.pId" @click="select(item.pType, item.pId)">
+                            {{ item.pType }}
+                        </a-menu-item>
+                    </a-menu>
+                </a-dropdown>
+            </a-col>
+            <a-col :span='6' :offset="1">
+                <a-input style="width:175px;" v-model="cName" placeholder="Please Input Your Name" />
+            </a-col>
+            <a-col :span="3" :offset="2">
+                <a-button type="primary" @click="save">Save</a-button>
+            </a-col>
+        </a-row>
 	</div>
 </template>
 <script>
+	import 'quill/dist/quill.core.css';
+	import 'quill/dist/quill.snow.css';
+	import 'quill/dist/quill.bubble.css';
+	import { quillEditor } from 'vue-quill-editor';
 	export default {
 		name: 'write',
-		data() {
-			return {};
+		components: {
+			quillEditor,
 		},
+		data() {
+			return {
+                editorOption: {},
+                title: '',
+                content: '',
+                selectType: '',
+                selectTypeId: '',
+                cName: '',
+                types: [
+                    { pId: 1,
+                        pType: 'js',
+                    },
+                    { pId: 2,
+                        pType: 'java',
+                    },
+                    { pId: 3,
+                        pType: 'php',
+                    },
+                ],
+            };
+        },
+        computed: {
+        },
+        methods: {
+            select(pType, pId) {
+                this.selectType = pType;
+                this.selectTypeId = pId;
+            },
+            verify() {
+                if (!this.title) {
+                    this.$message.warning('Please input the Title!');
+                    return false;
+                }
+                if (!this.content) {
+                    this.$message.warning('Please input the Content!');
+                    return false;
+                }
+                if (!this.selectType) {
+                    this.$message.warning('Please select the Type!');
+                    return false;
+                }
+                if (!this.cName) {
+                    this.$message.warning('Please input the Name!');
+                    return false;
+                }
+                if (this.$store.getters['USER/USER_IDENTIFY'] !== 1 && (this.cName === 'LAPFUTURE')) {
+                    this.$message.warning('Vistors can not use LAPFUTURE as name!');
+                    return false;
+                }
+                return true;
+            },
+            save() {
+                if (this.verify()) {
+                    let param = {
+                        title: this.title,
+                        content: this.content,
+                        ptype: this.selectType,
+                        pid: this.selectTypeId,
+                        cname: this.$store.getters['USER/USER_NAME'],
+                    };
+                    this.$axios.post('article/add', this.$QS.stringify(param))
+                    .then(res => {
+                        if (res.data.status === '1') {
+                            this.$message.sucess('Save Success!');
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    })
+                    .catch(err => {
+                        this.$message.error(err);
+                    });
+                }
+            },
+            setCName() {
+                if (this.$store.getters['USER/INEDTIFY'] === 1) {
+                    this.cName = 'LAPFUTURE';
+                } else {
+                    this.cName = '';
+                }
+            },
+        },
+        created() {
+            this.setCName();
+        },
 	};
 </script>
+<style scoped>
+    .quill-editor {
+        height: 400px;
+    }
+</style>

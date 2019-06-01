@@ -9,7 +9,7 @@ import 'ant-design-vue/dist/antd.css';
 import {
 	// Affix,
 	// Anchor,
-	// AutoComplete,
+	AutoComplete,
 	// Alert,
 	Avatar,
 	BackTop,
@@ -25,7 +25,7 @@ import {
 	Col,
 	// DatePicker,
 	Divider,
-	// Dropdown,
+	Dropdown,
 	// Form,
 	Icon,
 	Input,
@@ -53,7 +53,7 @@ import {
 	// Transfer,
 	// Tree,
 	// TreeSelect,
-	// Tabs,
+	Tabs,
 	Tag,
 	// TimePicker,
 	// Timeline,
@@ -82,7 +82,7 @@ Vue.prototype.$confirm = Modal.confirm;
 /* v1.1.3+ registration methods */
 // Vue.use(Affix);
 // Vue.use(Anchor);
-// Vue.use(AutoComplete);
+Vue.use(AutoComplete);
 // Vue.use(Alert);
 Vue.use(Avatar);
 Vue.use(BackTop);
@@ -99,7 +99,7 @@ Vue.use(Col);
 // Vue.use(DatePicker);
 Vue.use(Divider);
 // Vue.use(Drawer);
-// Vue.use(Dropdown);
+Vue.use(Dropdown);
 // Vue.use(Form);
 Vue.use(Icon);
 Vue.use(Input);
@@ -125,7 +125,7 @@ Vue.use(Table);
 // Vue.use(Transfer);
 // Vue.use(Tree);
 // Vue.use(TreeSelect);
-// Vue.use(Tabs);
+Vue.use(Tabs);
 Vue.use(Tag);
 // Vue.use(TimePicker);
 // Vue.use(Timeline);

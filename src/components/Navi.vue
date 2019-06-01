@@ -8,19 +8,25 @@
                     :theme="theme"
                 >
                     <a-menu-item key="home">
-                        <a-icon type="home" /> Home
+                        <router-link to="/DateWithYou/home">
+                            <a-icon type="home" /> Home
+                        </router-link>
                     </a-menu-item>
                     <a-menu-item key="drag">
                         <a-icon type="drag" /> Point
                     </a-menu-item>
                     <a-menu-item key="edit">
-                        <a-icon type="edit" /> Write
+                        <router-link to="/DateWithYou/write">
+                            <a-icon type="edit" /> Write
+                        </router-link>
                     </a-menu-item>
                     <a-menu-item key="book">
                         <a-icon type="book" /> Article
                     </a-menu-item>
                     <a-menu-item key="setting">
-                        <a-icon type="setting" /> Setting
+                        <router-link to="/DateWithYou/setting">
+                            <a-icon type="setting" /> Setting
+                        </router-link>
                     </a-menu-item>
                     <a-menu-item key="login">
                         <router-link to="/DateWithYou/login">

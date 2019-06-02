@@ -8,25 +8,25 @@
                     :theme="theme"
                 >
                     <a-menu-item key="home">
-                        <router-link to="/DateWithYou/home">
+                        <span @click="go('home')">
                             <a-icon type="home" /> Home
-                        </router-link>
+                        </span>
                     </a-menu-item>
                     <a-menu-item key="drag">
                         <a-icon type="drag" /> Point
                     </a-menu-item>
                     <a-menu-item key="edit">
-                        <router-link to="/DateWithYou/write">
+                        <span @click="go('write')">
                             <a-icon type="edit" /> Write
-                        </router-link>
+                        </span>
                     </a-menu-item>
                     <a-menu-item key="book">
                         <a-icon type="book" /> Article
                     </a-menu-item>
                     <a-menu-item key="setting">
-                        <router-link to="/DateWithYou/setting">
+                        <span @click="go('setting', true)">
                             <a-icon type="setting" /> Setting
-                        </router-link>
+                        </span>
                     </a-menu-item>
                     <a-menu-item key="login">
                         <router-link to="/DateWithYou/login">
@@ -58,6 +58,20 @@ export default {
     methods: {
         changeTheme(checked) {
             this.theme = checked ? 'light' : 'dark';
+        },
+        go(where, isLogin) {
+            if (isLogin) {
+                this.isLogin(where);
+            } else {
+                this.$router.push({ path: '/DateWithYou/' + where });
+            }
+        },
+        isLogin(where) {
+            if (this.$store.getters['USER/USER_IDENTIFY'] !== 1) {
+                this.$message.warning('Please Login!');
+            } else {
+                this.$router.push({ path: '/DateWithYou/' + where });
+            };
         },
     },
 };

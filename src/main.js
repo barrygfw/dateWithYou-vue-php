@@ -13,7 +13,7 @@ import {
 	// Alert,
 	Avatar,
 	BackTop,
-	// Badge,
+	Badge,
 	Breadcrumb,
 	Button,
 	// Calendar,
@@ -86,7 +86,7 @@ Vue.use(AutoComplete);
 // Vue.use(Alert);
 Vue.use(Avatar);
 Vue.use(BackTop);
-// Vue.use(Badge);
+Vue.use(Badge);
 Vue.use(Breadcrumb);
 Vue.use(Button);
 // Vue.use(Calendar);

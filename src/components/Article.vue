@@ -3,7 +3,7 @@
         <a-card
             :title="item.ptype"
             v-for="item in source"
-            :key="item.pid"
+            :key="item.id"
             hoverable
             class="article"
         >
@@ -15,9 +15,14 @@
             <p class="title">
                 {{ item.title }}
             </p>
-            <p>
-                <a-tag color="green"><a-icon type="like" /><b>{{ item.star }}</b></a-tag>
-                <a-tag color="red"><a-icon type="dislike" /><b>{{ item.diss }}</b></a-tag>
+            <p style="display: flex;justify-content: space-between;">
+                <span>
+                    <a-tag color="green" @click="star(item.id)"><a-icon type="like" /><b>{{ item.star }}</b></a-tag>
+                    <a-tag color="red" @click="diss(item.id)"><a-icon type="dislike" /><b>{{ item.diss }}</b></a-tag>
+                </span>
+                <span>
+                    <a-tag color="pink" @click="showDetail(item.id)"><b>Show Detail</b></a-tag>
+                </span>
             </p>
         </a-card>
     </div>
@@ -31,7 +36,7 @@
                 default: () => {
                     return [
                         {
-                            pid: 1,
+                            id: 1,
                             cname: 'yeyan1996',
                             ctime: '2天前',
                             title:
@@ -42,6 +47,59 @@
                         },
                     ];
                 },
+            },
+        },
+        methods: {
+            star(id) {
+                let param = {
+                    id,
+                };
+                this.$axios.post('article/star', this.$QS.stringify(param))
+                .then(res => {
+                    if (res.data.status === '1') {
+                        this.$message.success('Star Success!');
+                        for (let i = 0, length = this.source.length; i < length; i++) {
+                            if (this.source[i].id === id) {
+                                this.source.star++;
+                                this.$emit('star-call-back', id);
+                                return;
+                            }
+                        }
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
+            },
+            diss(id) {
+                let param = {
+                    id,
+                };
+                this.$axios.post('article/diss', this.$QS.stringify(param))
+                .then(res => {
+                    if (res.data.status === '1') {
+                        this.$message.success('Diss Success!');
+                        for (let i = 0, length = this.source.length; i < length; i++) {
+                            if (this.source[i].id === id) {
+                                this.source.star++;
+                                this.$emit('diss-call-back', id);
+                                return;
+                            }
+                        }
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
+            },
+            showDetail(id) {
+                this.$router.push({ path: '/DateWithYou/Detail',
+                                    query: { id: id },
+                                });
             },
         },
     };

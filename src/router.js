@@ -22,6 +22,7 @@ export default new Router({
 			path: '/DateWithYou',
 			name: 'DateWithYou',
 			component: () => import('./views/DateWithYou.vue'),
+			redirect: '/DateWithYou/home',
 			children: [
 				{
 					path: '/DateWithYou/home',
@@ -42,6 +43,10 @@ export default new Router({
 				{
 					path: '/DateWithYou/write',
 					component: () => import('./views/Write.vue'),
+				},
+				{
+					path: '/DateWithYou/detail',
+					component: () => import('./views/Detail.vue'),
 				},
 			],
 		},

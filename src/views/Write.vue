@@ -101,24 +101,46 @@
             },
             save() {
                 if (this.verify()) {
-                    let param = {
-                        title: this.title,
-                        content: this.content,
-                        ptype: this.selectType,
-                        pid: this.selectTypeId,
-                        cname: this.$store.getters['USER/USER_NAME'],
-                    };
-                    this.$axios.post('article/add', this.$QS.stringify(param))
-                    .then(res => {
-                        if (res.data.status === '1') {
-                            this.$message.sucess('Save Success!');
-                        } else {
-                            this.$message.error(res.data.message);
-                        }
-                    })
-                    .catch(err => {
-                        this.$message.error(err);
-                    });
+                    if (this.$route.query.id) {
+                        let param = {
+                            id: this.$route.query.id,
+                            title: this.title,
+                            content: this.content,
+                            ptype: this.selectType,
+                            pid: this.selectTypeId,
+                            cname: this.cName,
+                        };
+                        this.$axios.post('article/edit', this.$QS.stringify(param))
+                        .then(res => {
+                            if (res.data.status === '1') {
+                                this.$message.success('Edit Success!');
+                            } else {
+                                this.$message.error('Edit Fail,' + res.data.message);
+                            }
+                        })
+                        .catch(err => {
+                            this.$message.error(err);
+                        });
+                    } else {
+                        let param = {
+                            title: this.title,
+                            content: this.content,
+                            ptype: this.selectType,
+                            pid: this.selectTypeId,
+                            cname: this.cName,
+                        };
+                        this.$axios.post('article/add', this.$QS.stringify(param))
+                        .then(res => {
+                            if (res.data.status === '1') {
+                                this.$message.success('Save Success!');
+                            } else {
+                                this.$message.error(res.data.message);
+                            }
+                        })
+                        .catch(err => {
+                            this.$message.error(err);
+                        });
+                    }
                 }
             },
             setCName() {
@@ -128,9 +150,33 @@
                     this.cName = '';
                 }
             },
+            getArticleOne(id) {
+                let param = {
+                    id,
+                };
+                this.$axios.post('article/get_one', this.$QS.stringify(param))
+                .then(res => {
+                    if (res.data.status === '1') {
+                        let article = res.data.data[0];
+                        this.title = article.title;
+                        this.content = article.content;
+                        this.selectType = article.ptype;
+                        this.cName = article.cname;
+                        this.$message.success('Please Edit');
+                    } else {
+                        this.$messsage.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
+            },
         },
         created() {
             this.setCName();
+            if (this.$route.query.id) {
+                this.getArticleOne(this.$route.query.id);
+            }
         },
 	};
 </script>

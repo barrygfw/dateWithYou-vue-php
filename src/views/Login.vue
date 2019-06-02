@@ -96,6 +96,8 @@
 					);
 					if (result.data.status === '1') {
 						this.$message.success('登录成功');
+						this.$store.commit('USER/SET_USER_NAME', 'LAPFUTURE');
+						this.$store.commit('USER/SET_USER_IDENTIFY', 1);
 						this.$router.push({ path: '/DateWithYou/setting' });
 					} else {
 						this.$message.error(result.data.message);

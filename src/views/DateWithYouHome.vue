@@ -1,7 +1,7 @@
 <template>
 	<a-row>
 		<a-col :span="17">
-			<Article :source="source"></Article>
+			<Article :source="source" v-on:star-call-back="starCallBack" v-on:diss-call-back="dissCallBack"></Article>
         </a-col>
 		<a-col :span="6" :offset="1">
 			<a-card title="TopStar" hoverable class="top">
@@ -63,12 +63,27 @@
 			};
         },
         methods: {
+            starCallBack(id) {
+                for (let i = 0, length = this.source.length; i < length; i++) {
+                    if (this.source[i].id === id) {
+                        this.source[i].star++;
+                        return;
+                    }
+                }
+            },
+            dissCallBack(id) {
+                for (let i = 0, length = this.source.length; i < length; i++) {
+                    if (this.source[i].id === id) {
+                        this.source[i].diss++;
+                        return;
+                    }
+                }
+            },
             getArticleAll() {
                 this.$axios.post('article/get_all')
                 .then(res => {
                     if (res.data.status === '1') {
                         this.source = res.data.data;
-                        console.log(this.source);
                     } else {
                         this.$message.error(res.data.message);
                     }

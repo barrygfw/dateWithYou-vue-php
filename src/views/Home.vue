@@ -69,7 +69,6 @@
 				</p>
 			</a-col>
 		</a-row>
-
 		<canvas id="evanyou-canvas" class="evan-you"></canvas>
 	</div>
 </template>
@@ -145,7 +144,7 @@
 		position: absolute;
 		top: 0px;
 		left: 0px;
-		z-index: 0;
+		z-index: -10;
 		width: 100%;
 		pointer-events: none;
 	}

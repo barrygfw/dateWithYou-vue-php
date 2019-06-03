@@ -7,31 +7,25 @@
                     mode="horizontal"
                     :theme="theme"
                 >
-                    <a-menu-item key="home">
-                        <span @click="go('home')">
-                            <a-icon type="home" /> Home
-                        </span>
+                    <a-menu-item key="home" @click="go('home')">
+                        <a-icon type="home" /> Home
                     </a-menu-item>
-                    <a-menu-item key="drag">
-                        <a-icon type="drag" /> Point
-                    </a-menu-item>
-                    <a-menu-item key="edit">
-                        <span @click="go('write')">
-                            <a-icon type="edit" /> Write
-                        </span>
+                    <a-menu-item key="edit" @click="go('write')">
+                        <a-icon type="edit" /> Write
                     </a-menu-item>
                     <a-menu-item key="book">
-                        <a-icon type="book" /> Article
+                        <a-icon type="book" />Articles
                     </a-menu-item>
-                    <a-menu-item key="setting">
-                        <span @click="go('setting', true)">
-                            <a-icon type="setting" /> Setting
-                        </span>
+                    <a-menu-item key="setting" @click="go('setting', true)">
+                        <a-icon type="setting" /> Setting
                     </a-menu-item>
                     <a-menu-item key="login">
                         <router-link to="/DateWithYou/login">
                             <a-icon type="login"/> Login
                         </router-link>
+                    </a-menu-item>
+                    <a-menu-item key="bg-colors" @click="$emit('change-bg')">
+                        <a-icon type="bg-colors" /> ChangeBG
                     </a-menu-item>
                     <a-menu-item key="theme">
                         <a-switch

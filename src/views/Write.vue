@@ -1,7 +1,9 @@
 <template>
 	<div>
         <br />
-        <a-input addonBefore="Title" v-model="title" placeholder="Please input the acticle title"/>
+        <a-input style="width:91%;" addonBefore="Title" v-model="title" placeholder="Please input the acticle title">
+        </a-input>
+        <a-button @click="clear">Clear</a-button>
         <br /><br />
         <div>
             <quillEditor v-model="content"
@@ -23,8 +25,8 @@
                         />
                     </a-input-group>
                     <a-menu slot="overlay">
-                        <a-menu-item v-for="item in types" v-bind:key="item.pId" @click="select(item.pType, item.pId)">
-                            {{ item.pType }}
+                        <a-menu-item v-for="item in types" v-bind:key="item.id" @click="select(item.name, item.id)">
+                            {{ item.name }}
                         </a-menu-item>
                     </a-menu>
                 </a-dropdown>
@@ -50,7 +52,9 @@
 		},
 		data() {
 			return {
-                editorOption: {},
+                editorOption: {
+                    placeholder: 'Please Input...',
+                },
                 title: '',
                 content: '',
                 selectType: '',
@@ -72,6 +76,12 @@
         computed: {
         },
         methods: {
+            clear() {
+                this.title = '';
+                this.content = '';
+                this.selectType = '';
+                this.cName = '';
+            },
             select(pType, pId) {
                 this.selectType = pType;
                 this.selectTypeId = pId;
@@ -164,7 +174,20 @@
                         this.cName = article.cname;
                         this.$message.success('Please Edit');
                     } else {
-                        this.$messsage.error(res.data.message);
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
+            },
+            getArticleType() {
+                this.$axios.post('category/get_category')
+                .then(res => {
+                    if (res.data.status === '1') {
+                        this.types = res.data.data;
+                    } else {
+                        this.$message.error(res.data.message);
                     }
                 })
                 .catch(err => {
@@ -174,6 +197,7 @@
         },
         created() {
             this.setCName();
+            this.getArticleType();
             if (this.$route.query.id) {
                 this.getArticleOne(this.$route.query.id);
             }

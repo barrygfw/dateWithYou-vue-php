@@ -25,8 +25,25 @@
 						</template>
 					</a-table>
 				</a-tab-pane>
-				<a-tab-pane tab="Nav" key="2" forceRender>
-					Content of Tab Pane 2
+				<a-tab-pane tab="Types" key="2" forceRender>
+                    <br /><br />
+                    <a-input-search placeholder="Please Input the Type of Article" @search="addTypes" enterButton="Add" v-model="valueOfAdd" style="width:95%;"/>
+					<br /><br />
+					<a-table
+						bordered
+						:dataSource="typesDataSource"
+						:columns="typesColumns"
+						:scroll="{ x: 700 }"
+					>
+						<template slot="operation" slot-scope="text, record">
+							<a-button
+								@click="deleteType(record.id)"
+								type="danger"
+								size="small"
+								>Delete</a-button
+							>
+						</template>
+					</a-table>
 				</a-tab-pane>
 				<a-tab-pane tab="Tab 3" key="3">
 					Content of Tab Pane 3
@@ -40,6 +57,7 @@
 		name: 'setting',
 		data() {
 			return {
+                valueOfAdd: '',
 				columns: [
 					{
 						title: 'Title',
@@ -64,12 +82,49 @@
 					},
 				],
 				dataSource: [],
+				typesColumns: [
+					{
+						title: 'Id',
+                        dataIndex: 'id',
+                        width: 75,
+					},
+					{
+						title: 'Value',
+						dataIndex: 'name',
+					},
+					{
+						title: 'Operation',
+						dataIndex: 'operation',
+						scopedSlots: { customRender: 'operation' },
+						fixed: 'right',
+						width: 100,
+					},
+				],
+				typesDataSource: [],
 			};
 		},
 		methods: {
-			callback(key) {
-				console.log(key);
-			},
+			callback(key) {},
+			addTypes() {
+                if (this.valueOfAdd) {
+                    let param = {
+                        name: this.valueOfAdd,
+                    };
+                    this.$axios.post('category/add_l', this.$QS.stringify(param))
+                    .then(res => {
+                        if (res.data.status === '1') {
+                            this.getArticleType();
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    })
+                    .catch(err => {
+                        this.$message.error(err);
+                    });
+                } else {
+                    this.$message.warning('The Value of Article can not be Null!');
+                }
+            },
 			getArticleAll() {
 				this.$axios
 					.post('article/get_all')
@@ -115,9 +170,37 @@
 						this.$message.error(err);
 					});
 			},
+			deleteType(id) {
+				console.log(id);
+			},
+			getArticleType() {
+				this.$axios
+					.post('category/get_category')
+					.then(res => {
+						if (res.data.status === '1') {
+							this.typesDataSource = res.data.data.map(
+								(item, index, arr) => {
+									item.key = item.id;
+									return item;
+								}
+                            );
+						} else {
+							this.$message.error(res.data.message);
+						}
+					})
+					.catch(err => {
+						this.$message.error(err);
+					});
+			},
 		},
 		created() {
-			this.getArticleAll();
+			if (this.$store.getters['USER/USER_IDENTIFY'] !== 1) {
+				this.$message.warning('Please Login!');
+				this.$router.push({ path: '/DatwWithYou/login' });
+			} else {
+				this.getArticleAll();
+				this.getArticleType();
+			}
 		},
 	};
 </script>

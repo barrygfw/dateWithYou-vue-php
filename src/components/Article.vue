@@ -60,8 +60,8 @@
                         this.$message.success('Star Success!');
                         for (let i = 0, length = this.source.length; i < length; i++) {
                             if (this.source[i].id === id) {
-                                this.source.star++;
-                                this.$emit('star-call-back', id);
+                                this.source[i].star++;
+                                // this.$emit('star-call-back', id);
                                 return;
                             }
                         }
@@ -83,8 +83,8 @@
                         this.$message.success('Diss Success!');
                         for (let i = 0, length = this.source.length; i < length; i++) {
                             if (this.source[i].id === id) {
-                                this.source.star++;
-                                this.$emit('diss-call-back', id);
+                                this.source[i].diss++;
+                                // this.$emit('diss-call-back', id);
                                 return;
                             }
                         }

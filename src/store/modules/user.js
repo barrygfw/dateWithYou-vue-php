@@ -7,7 +7,7 @@ const types = {
 };
 
 const state = {
-	USER_NAME: '游客',
+	USER_NAME: 'Vistor',
 	USER_IDENTIFY: 0, // 未登录
 };
 
@@ -28,7 +28,7 @@ const mutations = {
 			: (state.USER_IDENTIFY = 0);
 	},
 	[types.CLEAR_ALL](state) {
-		state.USER_NAME = '游客';
+		state.USER_NAME = 'Vistor';
 		state.USER_IDENTIFY = 0;
 	},
 };

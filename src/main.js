@@ -26,12 +26,12 @@ import {
 	// DatePicker,
 	Divider,
 	Dropdown,
-	// Form,
+	Form,
 	Icon,
 	Input,
 	InputNumber,
 	Layout,
-	// List,
+	List,
 	// LocaleProvider,
 	message,
 	Menu,
@@ -61,7 +61,7 @@ import {
 	Upload,
 	// Drawer,
 	// Skeleton,
-	// Comment,
+	Comment,
 	// ConfigProvider,
 } from 'ant-design-vue';
 
@@ -100,12 +100,12 @@ Vue.use(Col);
 Vue.use(Divider);
 // Vue.use(Drawer);
 Vue.use(Dropdown);
-// Vue.use(Form);
+Vue.use(Form);
 Vue.use(Icon);
 Vue.use(Input);
 Vue.use(InputNumber);
 Vue.use(Layout);
-// Vue.use(List);
+Vue.use(List);
 // Vue.use(LocaleProvider);
 Vue.use(Menu);
 Vue.use(Modal);
@@ -132,7 +132,7 @@ Vue.use(Tag);
 // Vue.use(Tooltip);
 Vue.use(Upload);
 // Vue.use(Skeleton);
-// Vue.use(Comment);
+Vue.use(Comment);
 // Vue.use(ConfigProvider);
 
 Vue.prototype.$axios = axios;

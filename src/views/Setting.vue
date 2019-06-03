@@ -33,7 +33,7 @@
 						bordered
 						:dataSource="typesDataSource"
 						:columns="typesColumns"
-						:scroll="{ x: 700 }"
+                        :scroll="{ x: 700 }"
 					>
 						<template slot="operation" slot-scope="text, record">
 							<a-button
@@ -45,8 +45,8 @@
 						</template>
 					</a-table>
 				</a-tab-pane>
-				<a-tab-pane tab="Tab 3" key="3">
-					Content of Tab Pane 3
+				<a-tab-pane tab="Others" key="3">
+					Others
 				</a-tab-pane>
 			</a-tabs>
 		</a-col>
@@ -113,6 +113,8 @@
                     this.$axios.post('category/add_l', this.$QS.stringify(param))
                     .then(res => {
                         if (res.data.status === '1') {
+                            this.valueOfAdd = '';
+                            this.$message.success('Add Success!');
                             this.getArticleType();
                         } else {
                             this.$message.error(res.data.message);
@@ -171,26 +173,39 @@
 					});
 			},
 			deleteType(id) {
-				console.log(id);
+                let param = {
+                    id,
+                };
+                this.$axios.post('category/delete_type', this.$QS.stringify(param))
+                .then(res => {
+                    if (res.data.status === '1') {
+                        this.$message.success('Delete Success');
+                        this.getArticleType();
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
 			},
 			getArticleType() {
-				this.$axios
-					.post('category/get_category')
-					.then(res => {
-						if (res.data.status === '1') {
-							this.typesDataSource = res.data.data.map(
-								(item, index, arr) => {
-									item.key = item.id;
-									return item;
-								}
-                            );
-						} else {
-							this.$message.error(res.data.message);
-						}
-					})
-					.catch(err => {
-						this.$message.error(err);
-					});
+				this.$axios.post('category/get_category')
+                .then(res => {
+                    if (res.data.status === '1') {
+                        this.typesDataSource = res.data.data.map(
+                            (item, index, arr) => {
+                                item.key = item.id;
+                                return item;
+                            }
+                        );
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
 			},
 		},
 		created() {

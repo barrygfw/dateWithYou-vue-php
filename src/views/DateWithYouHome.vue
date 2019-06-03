@@ -148,7 +148,12 @@
                 this.$axios.post('article/topStar')
                 .then(res => {
                     if (res.data.status === '1') {
-                        this.topStar = res.data.data;
+                        if (res.data.data.length < 3) {
+                            this.topStar = res.data.data;
+                        } else {
+                            res.data.data.length = 3;
+                            this.topStar = res.data.data;
+                        }
                     } else {
                         this.$message.error(res.data.message);
                     }

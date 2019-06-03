@@ -154,7 +154,7 @@
                 }
             },
             setCName() {
-                if (this.$store.getters['USER/INEDTIFY'] === 1) {
+                if (this.$store.getters['USER/USER_IDENTIFY'] === 1) {
                     this.cName = 'LAPFUTURE';
                 } else {
                     this.cName = '';

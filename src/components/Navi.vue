@@ -13,7 +13,7 @@
                     <a-menu-item key="edit" @click="go('write')">
                         <a-icon type="edit" /> Write
                     </a-menu-item>
-                    <a-menu-item key="book">
+                    <a-menu-item key="book" @click="notOk">
                         <a-icon type="book" />Articles
                     </a-menu-item>
                     <a-menu-item key="setting" @click="go('setting', true)">
@@ -66,6 +66,9 @@ export default {
             } else {
                 this.$router.push({ path: '/DateWithYou/' + where });
             };
+        },
+        notOk() {
+            this.$message.warning('The Page is not Completed!');
         },
     },
 };

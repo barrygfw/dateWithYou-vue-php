@@ -1,13 +1,15 @@
 <template>
 	<a-row class="top">
 		<a-col :span="2" class="border-right">
-			<a-badge :count="starNum" :numberStyle= "{backgroundColor: '#52c41a'} ">
+			<a-badge :count="starNum" :numberStyle= "{backgroundColor: '#52c41a'}">
 				<a-tag color="green" @click="star"><a-icon type="like" /></a-tag>
             </a-badge>
-            <a-badge :count="dissNum" >
+            <a-badge :count="dissNum">
                 <a-tag color="red" @click="diss"><a-icon type="dislike" /></a-tag>
             </a-badge>
-            <a-tag color="pink" @click="comment"><a-icon type="message" /></a-tag>
+            <a-badge :count="commentNum" :numberStyle= "{backgroundColor: '#52c41a'}">
+                <a-tag color="pink" @click="comment"><a-icon type="message" /></a-tag>
+            </a-badge>
 		</a-col>
 		<a-col :span="22">
             <h3>Created By <a-tag color="pink">{{ cName }}</a-tag> <a-tag color="green">{{ cTime }}</a-tag></h3>
@@ -20,7 +22,46 @@
                     >
                 </quillEditor>
             </div>
-		</a-col>
+        </a-col>
+        <a-col v-if="showComment" :span="22" :offset="2" style="position:absolute;" class="comment">
+            <div style="height:63vh;overflow-y: auto;">
+                <a-list
+                    :dataSource="comments"
+                    itemLayout="horizontal"
+                    >
+                    <a-list-item slot="renderItem" slot-scope="item">
+                        <a-comment
+                        :content="item.common"
+                        :datetime="item.time"
+                        >
+                        </a-comment>
+                    </a-list-item>
+                </a-list>
+            </div>
+            <a-comment>
+            <div slot="content">
+                <a-form-item>
+                <a-textarea :rows="4" v-model="commentValue" ></a-textarea>
+                </a-form-item>
+                <a-form-item>
+                    <p style="display: flex;justify-content:space-around;">
+                        <a-button
+                            @click="addComment"
+                            type="primary"
+                        >
+                            Add Comment
+                        </a-button>
+                        <a-button
+                            @click="closeComment"
+                            type="danger"
+                        >
+                            Close
+                        </a-button>
+                    </p>
+                </a-form-item>
+            </div>
+            </a-comment>
+        </a-col>
 	</a-row>
 </template>
 <script>
@@ -48,6 +89,10 @@
 				cName: '',
 				starNum: '',
                 dissNum: '',
+                showComment: false,
+                comments: '',
+                commentNum: '',
+                commentValue: '',
 			};
 		},
 		methods: {
@@ -110,12 +155,60 @@
                     this.$message.error(err);
                 });
             },
+            getComment(id) {
+                let param = {
+                    article_id: id,
+                };
+                this.$axios.post('common/get', this.$QS.stringify(param))
+                .then(res => {
+                    if (res.data.status === '1') {
+                        if (res.data.data) {
+                            this.commentNum = res.data.data.length;
+                            this.comments = res.data.data;
+                        }
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
+            },
             comment() {
-                console.log('comment');
+                this.showComment = !this.showComment;
+            },
+            addComment() {
+                if (this.commentValue) {
+                    let param = {
+                        article_id: this.$route.query.id,
+                        common: this.commentValue,
+                    };
+                    this.$axios.post('common/add', this.$QS.stringify(param))
+                    .then(res => {
+                        if (res.data.status === '1') {
+                            this.$message.success('Add Comment Success!');
+                            this.getComment(this.$route.query.id);
+                            this.commentValue = '';
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    })
+                    .catch(err => {
+                        this.$message.error(err);
+                    });
+                } else {
+                    this.$message.warning('Please Input Comment!');
+                }
+            },
+            closeComment() {
+                this.showComment = false;
             },
 		},
 		created() {
-			this.getArticleOne(this.$route.query.id);
+            if (this.$route.query.id) {
+                this.getArticleOne(this.$route.query.id);
+                this.getComment(this.$route.query.id);
+            }
 		},
 	};
 </script>
@@ -138,5 +231,9 @@
     }
     .editor {
         border-top: 1px solid #e8e8e8;
+    }
+    .comment {
+        background-color: rgb(244,245,245);
+        font-weight: bold;
     }
 </style>

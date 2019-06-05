@@ -1,9 +1,23 @@
 <template>
     <a-row>
+        <a-col :span="24">
+                <Quote v-on:img-call-back = "imgCallBack"></Quote>
+        </a-col>
         <a-col :span="17">
 			<Article :source="source" v-on:star-call-back="starCallBack" v-on:diss-call-back="dissCallBack"></Article>
         </a-col>
 		<a-col :span="6" :offset="1">
+            <a-card
+                hoverable
+                class="top"
+              >
+                <img
+                class="shan-bay"
+                  alt="example"
+                  :src="shanBayImg"
+                  slot="cover"
+                />
+            </a-card>
 			<a-card title="TopStar" hoverable class="top">
 				<span slot="extra">more</span>
 				<div class="article" v-for="item in topStar" :key="item.id">
@@ -32,16 +46,20 @@
 </template>
 <script>
 	import Article from '../components/Article.vue';
+    import Quote from '../components/Quote.vue';
+
 	export default {
 		name: 'DateWithYouHome',
 		components: {
 			Article,
+            Quote,
 		},
 		data() {
 			return {
                 source: [],
                 translateWord: '',
                 translateText: '',
+                shanBayImg: '',
 				topStar: [
 					{
                         id: 123,
@@ -68,6 +86,9 @@
 			};
         },
         methods: {
+            imgCallBack(img) {
+               this.shanBayImg = img;
+            },
             star(id) {
                 let param = {
                     id,
@@ -187,6 +208,9 @@
 	};
 </script>
 <style scoped>
+    img[class='shan-bay'] {
+        min-height: 333.8px;
+    }
 	.article {
         border-bottom: 1px solid #e8e8e8;
         cursor: pointer;

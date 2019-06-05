@@ -45,11 +45,31 @@
 						</template>
 					</a-table>
 				</a-tab-pane>
-				<a-tab-pane tab="Others" key="3">
-					Others
+				<a-tab-pane tab="Quote" key="3">
+                        <a-table
+						bordered
+						:dataSource="quotesDataSource"
+						:columns="quotesColumns"
+                        :scroll="{ x: 700 }"
+					>
+						<template slot="operation" slot-scope="text, record">
+                            <a-button
+								@click="pictureDetail(record.picture_url)"
+								type="primary"
+								size="small"
+                                >Picture
+                            </a-button>&nbsp;
+							<a-button
+								@click="deleteQuote(record.id)"
+								type="danger"
+								size="small"
+                                >Delete
+                            </a-button>
+						</template>
+					</a-table>
 				</a-tab-pane>
 			</a-tabs>
-		</a-col>
+        </a-col>
 	</a-row>
 </template>
 <script>
@@ -101,6 +121,38 @@
 					},
 				],
 				typesDataSource: [],
+                quotesColumns: [
+					{
+						title: 'Id',
+                        fixed: 'left',
+                        dataIndex: 'id',
+                        width: 75,
+					},
+					{
+						title: 'Content',
+						dataIndex: 'content',
+					},
+                    {
+						title: 'Translation',
+						dataIndex: 'translation',
+					},
+                    {
+						title: 'Author',
+						dataIndex: 'author',
+					},
+                    {
+						title: 'Time',
+						dataIndex: 'assign_date',
+					},
+					{
+						title: 'Operation',
+						dataIndex: 'operation',
+						scopedSlots: { customRender: 'operation' },
+						fixed: 'right',
+						width: 160,
+					},
+				],
+				quotesDataSource: [],
 			};
 		},
 		methods: {
@@ -207,6 +259,44 @@
                     this.$message.error(err);
                 });
 			},
+            getAllQuotes() {
+                this.$axios.post('quote/get_all_quotes')
+                .then(res => {
+                    if (res.data.status === '1') {
+                        this.quotesDataSource = res.data.data.map(
+								(item, index, arr) => {
+									item.key = item.id;
+									return item;
+								}
+							);
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
+            },
+            pictureDetail(img) {
+                window.open(img, '_blank');
+            },
+            deleteQuote(id) {
+                let param = {
+                    id,
+                };
+                this.$axios.post('quote/delete_quote', this.$QS.stringify(param))
+                .then(res => {
+                    if (res.data.status === '1') {
+                        this.$message.success('Delete Success');
+                        this.getAllQuotes();
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$message.error(err);
+                });
+            },
 		},
 		created() {
 			if (this.$store.getters['USER/USER_IDENTIFY'] !== 1) {
@@ -215,6 +305,7 @@
 			} else {
 				this.getArticleAll();
 				this.getArticleType();
+                this.getAllQuotes();
 			}
 		},
 	};
